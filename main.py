@@ -1,21 +1,32 @@
 try:
+    print("Операция сложения")
     number_one = int(input("Введите первое число: "))
     number_two = int(input("Введите второе число: "))
-    operation = input(str("Желаемая математическая операция (+, -, *, /): "))
-    if operation == "+":
-        result = number_one + number_two
-        print("Результат сложения: ", result)
-    elif operation == "-":
-        result = number_one - number_two
-        print("Результат вычитания: ", result)
-    elif operation == "*":
-        result = number_one * number_two
-        print("Результат умножения: ", result)
-    elif operation == "/":
-        result = number_one / number_two
-        print("Результат деления: ", result)
-    else:
-        print("Неизвестная операция")
+    print(number_one + number_two)
+except ValueError:
+    print("Введенные данные не являются числом")
+
+try:
+    print("Операция вычитания")
+    number_one = int(input("Введите первое число: "))
+    number_two = int(input("Введите второе число: "))
+    print(number_one - number_two)
+except ValueError:
+    print("Введенные данные не являются числом")
+
+try:
+    print("Операция умножения")
+    number_one = int(input("Введите первое число: "))
+    number_two = int(input("Введите второе число: "))
+    print(number_one * number_two)
+except ValueError:
+    print("Введенные данные не являются числом")
+
+try:
+    print("Операция деления")
+    number_one = int(input("Введите первое число: "))
+    number_two = int(input("Введите второе число: "))
+    print(number_one / number_two)
 except ValueError:
     print("Введенные данные не являются числом")
 except ZeroDivisionError:
