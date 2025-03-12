@@ -20,8 +20,8 @@ else:
     print("Data is not correct")
     sys.exit()
 
-law = str(input("Were you involved in crime? (yes/no) "))
-if law.lower() == "no":
+law = input("Were you involved in crime? (yes/no) ").lower()
+if law == "no":
     allowed = True
 elif law == "yes":
     allowed = False
