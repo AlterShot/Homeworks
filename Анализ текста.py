@@ -1,8 +1,10 @@
 import string
 
 
-def words_overall_count(words_separate):
-    return len(words_separate)
+def clean_punctuation():
+    no_punctuation = str.maketrans("", "", string.punctuation)
+    new_text = user_entering.translate(no_punctuation)
+    return new_text
 
 
 def find_longest_word(words_separate):
@@ -16,7 +18,7 @@ def find_longest_word(words_separate):
 def find_all_vowels():
     vowels_list = "аеёиоуыэюя"
     vowel_quantity = 0
-    for vowels in user_text:
+    for vowels in user_entering:
         if vowels in vowels_list:
             vowel_quantity += 1
     return vowel_quantity
@@ -33,12 +35,12 @@ def words_found(words_separate):
 
 
 def show_all():
+    user_text = clean_punctuation()
     words_separate = user_text.split()
-    word_count = words_overall_count(words_separate)
     longest_word = find_longest_word(words_separate)
     all_vowels = find_all_vowels()
     word_list = words_found(words_separate)
-    print(f"Всего слов в тексте: {word_count}")
+    print(f"Всего слов в тексте: {len(words_separate)}")
     print(f"Самое длинное слово: {longest_word}")
     print(f"Гласных букв в тексте: {all_vowels}")
 
@@ -47,6 +49,4 @@ def show_all():
 
 
 user_entering = input("Введите ваш текст: ").lower()
-no_punctuation = str.maketrans("", "", string.punctuation)
-user_text = user_entering.translate(no_punctuation)
 show_all()
