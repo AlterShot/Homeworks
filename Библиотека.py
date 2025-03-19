@@ -1,10 +1,10 @@
 def book_list_view(library):
     if not library:
         print("В библиотеке нет книг.")
-    else:
-        print("Список книг: ")
-        for book in library:
-            print(book)
+        return
+    print("Список книг: ")
+    for book in library:
+        print(book)
 
 
 library = {
