@@ -1,6 +1,3 @@
-import sys
-
-
 def calculate_average(grades):
     if not grades:
         return None
@@ -29,6 +26,8 @@ def calculate_average_overall(students):
         if not student["grades"]:
             continue
         all_grades.extend(student["grades"])
+        if not all_grades:
+            return None
     return sum(all_grades) / len(all_grades)
 
 
@@ -38,43 +37,50 @@ def finding_to_exclude(students):
     minimal_grade = calculate_average(student_execute["grades"])
     print(f"Студент с наименьшим баллом: {student_execute["name"]} (Балл: {minimal_grade:.2f}) будет исключен")
     students.remove(student_execute)
-    print("Новый список: ")
-    for student in students:
-        print(f"{student["name"]}")
+    new_list(students)
+
+
+def new_student():
+    name = input("Введите имя: ")
+    grade = []
+    for i in range(3):
+        try:
+            grade_input = int(input(f"Введите оценку {i + 1}: "))
+            if grade_input > 100 or grade_input < 0:
+                grade_input = int(input(f"Недопустимое число. Введите еще раз: "))
+            grade.append(grade_input)
+            return grade, name
+        except ValueError:
+            print("Неверный формат. Введите еще раз: ")
 
 
 def adding_student(students, name, grades):
     students.append({"name": name, "grades": grades})
+    new_list(students)
 
 
 def user_interface():
     while True:
-        begin = input(f"Выберите нужную функцию (список с баллами, общий средний, добавление студента, "
-                      f"удаление студента с низшим баллом)\nДля выхода введите \"выход\": ").lower()
-        if begin == "список с баллами":
+        begin = input(f"1. Просмотр списка баллов 2. Общий средний балл 3. Удаление студента с низшим баллом"
+                      f"4. Добавление студента 5. Выход: ")
+        if begin == "1":
             announce(students)
-        elif begin == "общий средний":
+        elif begin == "2":
             average_all = calculate_average_overall(students)
             print(f"Общий средний балл: {average_all:.2f}")
-        elif begin == "удаление студента с низшим баллом":
+        elif begin == "3":
             finding_to_exclude(students)
-        elif begin == "добавление студента":
-            name = input("Введите имя: ")
-            grade = []
-            for i in range(3):
-                while True:
-                    try:
-                        grade_input = int(input(f"Введите оценку {i + 1}: "))
-                        grade.append(grade_input)
-                        break
-                    except ValueError:
-                        print("Неверный формат. Введите еще раз: ")
+        elif begin == "4":
+            name, grade = new_student()
             adding_student(students, name, grade)
-            print("Новый список: ")
-            for student in students:
-                print(f"{student["name"]}")
-        elif begin == "выход":
-            sys.exit()
+        elif begin == "5":
+            break
+
+
+def new_list(students):
+    print("Новый список: ")
+    for student in students:
+        print(f"{student["name"]}")
 
 
 students = [
