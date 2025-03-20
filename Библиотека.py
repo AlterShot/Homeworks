@@ -35,6 +35,27 @@ def remove_book(title, library):
         print(f"Книги с названием \"{title}\" не существует")
 
 
+def issue_book(title, library):
+    if title in library:
+        if library[title]["in_stock"]:
+            library[title]["in_stock"] = False
+            print(f"Книгу \"{title}\" взяли")
+        else:
+            print(f"Книга \"{title}\" недоступна")
+    else:
+        print("Такой книги нет")
+
+
+def return_book(title, library):
+    if title in library:
+        if not library[title]["in_stock"]:
+            library[title]["in_stock"] = True
+            print(f"Книгу \"{title}\" вернули")
+        else:
+            print(f"Книга \"{title}\" доступна")
+    else:
+        print("Такой книги нет")
+
 
 library = {
     "Мертвые души": {"author": "Гоголь", "year": 1850, "in_stock": True},
@@ -61,3 +82,11 @@ add_book(library, title, author, year)
 book_list_view(library)
 remove_book(input("Какую книгу удалить? "), library)
 book_list_view(library)
+issue_book(input("Какую книгу взять? "), library)
+for title in library:
+    print(f"Книга \"{title}\": {"есть в наличии" if library[title]["in_stock"]
+    else "нет в наличии"}")
+return_book(input("Какую книгу вернуть? "), library)
+for title in library:
+    print(f"Книга \"{title}\": {"есть в наличии" if library[title]["in_stock"]
+    else "нет в наличии"}")
