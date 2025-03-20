@@ -8,40 +8,53 @@ def book_list_view(library):
 
 
 def add_book(library, title, author, year):
-    library["title"] = {"author": author, "year": year, "in_stock": None}
+    library[title] = {"author": author, "year": year, "in_stock": None}
     print(f"Книга \"{title}\" добавлена")
-    book_list_view(library)
 
 
-def update_book(library, title):
-    print(f"\"{title}\" уже существует. Желаете обновить? (да/нет) ")
-    option = input().lower()
-    if option == "да":
-        author = input("Укажите нового автора: ")
-        year = int(input("Новый год написания: "))
+def update_book(library):
+    title = input("Какую книгу хотите обновить? ")
+    if title in library:
+        new_author = input("Укажите нового автора: ")
+        new_year = int(input("Новый год написания: "))
+        library[title]["author"] = new_author
+        try:
+            library[title]["year"] = new_year
+        except ValueError:
+            print("Год введен некорректно.")
+        library[title]["in_stock"] = None
         print(f"Информация о книге \"{title}\" успешно обновлена")
-        book_list_view(library)
-    elif option == "нет":
-        print("Всего доброго!")
     else:
-        print("Введена некорректная команда")
+        print(f"Книга \"{title}\" не найдена")
 
 
-def play_with_library():
-    option = input("1. Список книг 2. Добавить книгу ")
-    try:
-        if option == "1":
-            book_list_view(library)
+def get_out():
+    print("Пока!")
+    return
+
+
+def play_with_library(library):
+    main_menu = {
+        "1": book_list_view,
+        "2": add_book,
+        "3": update_book,
+        "8": get_out
+    }
+
+    while True:
+        option = input("1. Список книг 2. Добавить книгу 3. Обновить книгу 8. Выход ")
+        if option == "8":
+            main_menu[option]()
+            break
         elif option == "2":
-            title = input("Введите название книги: ")
-            if title in library:
-                update_book(library, title)
-            else:
-                author = input("Укажите автора: ")
-                year = int(input("Год написания: "))
-                add_book(library, title, author, year)
-    except ValueError:
-        print("Год введен некорректно.")
+            title = str(input("Введите название книги: "))
+            author = str(input("Укажите автора: "))
+            year = int(input("Год написания: "))
+            main_menu[option](library, title, author, year)
+        elif option in main_menu:
+            main_menu[option](library)
+        else:
+            print("Такого в меню нет.")
 
 
 library = {
@@ -51,4 +64,4 @@ library = {
     "1984": {"author": "Хаксли", "year": "1960", "in_stock": False}
 }
 
-play_with_library()
+play_with_library(library)
