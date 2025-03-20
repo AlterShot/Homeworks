@@ -7,48 +7,46 @@ def book_list_view(library):
         print(book)
 
 
-def add_book(library, title=None, author=None, year=None):
-    if title is None:
-        title = input("Введите название книги: ")
+def add_book(library, title, author=None, year=None):
     if title in library:
         print(f"\"{title}\" уже существует. Желаете обновить? (да/нет) ")
         option = input().lower()
         if option == "да":
-            new_author = input("Укажите нового автора: ")
-            try:
-                new_year = int(input("Новый год написания: "))
-                library[title]["year"] = new_year
-            except ValueError:
-                print("Год введен некорректно.")
-            library[title]["author"] = new_author
+            if author:
+                library[title]["author"] = author
+            if year:
+                library[title]["year"] = year
             library[title]["in_stock"] = None
             print(f"Информация о книге \"{title}\" успешно обновлена")
         elif option == "нет":
-            print("Всего доброго!")
+            print("Отмена.")
         else:
             print("Введена некорректная команда")
     else:
-        if author is None:
-            author = input("Укажите автора: ")
-        if year is None:
-            while True:
-                try:
-                    year = int(input("Укажите год: "))
-                    break
-                except ValueError:
-                    print("Укажите корректный год: ")
-
-    library[title] = {"author": author, "year": year, "in_stock": None}
-    print(f"Книга \"{title}\" добавлена")
+        library[title] = {"author": author, "year": year, "in_stock": None}
+        print(f"Книга \"{title}\" добавлена")
 
 
 library = {
-    "Мертвые души": {"author": "Гоголь", "year": "1850", "in_stock": True},
-    "Препятствие - это путь": {"author": "Холидэй", "year": "2024", "in_stock": True},
-    "Медитации": {"author": "Аврелий", "year": "1320", "in_stock": True},
-    "1984": {"author": "Хаксли", "year": "1960", "in_stock": False}
+    "Мертвые души": {"author": "Гоголь", "year": 1850, "in_stock": True},
+    "Препятствие - это путь": {"author": "Холидэй", "year": 2024, "in_stock": True},
+    "Медитации": {"author": "Аврелий", "year": 1320, "in_stock": True},
+    "1984": {"author": "Хаксли", "year": 1960, "in_stock": False}
 }
 
 book_list_view(library)
-add_book(library)
+
+title = input("Введите название книги: ")
+author = input("Укажите автора: ")
+year = input("Укажите год: ")
+
+while True:
+    try:
+        year = int(year)
+        break
+    except ValueError:
+        print("Введены некорректные данные. Укажите год: ")
+        year = input()
+
+add_book(library, title, author, year)
 book_list_view(library)
