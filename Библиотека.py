@@ -36,7 +36,9 @@ def get_out():
 def play_with_library(library):
     main_menu = {
         "1": book_list_view,
-        "2": add_book,
+        "2": lambda: add_book(library, str(input("Введите название книги: ")),
+                                        str(input("Укажите автора: ")),
+                                        int(input("Год написания: "))),
         "3": update_book,
         "8": get_out
     }
@@ -47,10 +49,7 @@ def play_with_library(library):
             main_menu[option]()
             break
         elif option == "2":
-            title = str(input("Введите название книги: "))
-            author = str(input("Укажите автора: "))
-            year = int(input("Год написания: "))
-            main_menu[option](library, title, author, year)
+            main_menu[option]()
         elif option in main_menu:
             main_menu[option](library)
         else:
