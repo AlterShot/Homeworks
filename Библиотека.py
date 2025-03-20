@@ -27,7 +27,7 @@ def add_book(library, title, author, year):
         print(f"Книга \"{title}\" добавлена")
 
 
-def remove_book(title):
+def remove_book(title, library):
     if title in library:
         del library[title]
         print(f"Книга \"{title}\" удалена")
@@ -59,5 +59,5 @@ while True:
 
 add_book(library, title, author, year)
 book_list_view(library)
-remove_book(input("Какую книгу удалить? "))
+remove_book(input("Какую книгу удалить? "), library)
 book_list_view(library)
