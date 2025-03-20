@@ -57,6 +57,17 @@ def return_book(title, library):
         print("Такой книги нет")
 
 
+def find_book(title, library):
+    if title in library:
+        book = library[title]
+        print(f"Информация о книге \"{title}\":")
+        print(f"Автор: {book["author"]}")
+        print(f"Год издания: {book["year"]}")
+        print(f"В наличии: {"Да" if book["in_stock"] else "Нет"}")
+    else:
+        print("Книга не найдена. Проверьте корректность ввода")
+
+
 library = {
     "Мертвые души": {"author": "Гоголь", "year": 1850, "in_stock": True},
     "Препятствие - это путь": {"author": "Холидэй", "year": 2024, "in_stock": True},
@@ -90,3 +101,4 @@ return_book(input("Какую книгу вернуть? "), library)
 for title in library:
     print(f"Книга \"{title}\": {"есть в наличии" if library[title]["in_stock"]
     else "нет в наличии"}")
+find_book(input("Какая книга интересует? "), library)
