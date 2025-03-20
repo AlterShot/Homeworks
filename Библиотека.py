@@ -7,7 +7,7 @@ def book_list_view(library):
         print(book)
 
 
-def add_book(library, title, author=None, year=None):
+def add_book(library, title, author, year):
     if title in library:
         print(f"\"{title}\" уже существует. Желаете обновить? (да/нет) ")
         option = input().lower()
@@ -25,6 +25,15 @@ def add_book(library, title, author=None, year=None):
     else:
         library[title] = {"author": author, "year": year, "in_stock": None}
         print(f"Книга \"{title}\" добавлена")
+
+
+def remove_book(title):
+    if title in library:
+        del library[title]
+        print(f"Книга \"{title}\" удалена")
+    else:
+        print(f"Книги с названием \"{title}\" не существует")
+
 
 
 library = {
@@ -49,4 +58,6 @@ while True:
         year = input()
 
 add_book(library, title, author, year)
+book_list_view(library)
+remove_book(input("Какую книгу удалить? "))
 book_list_view(library)
