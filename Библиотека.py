@@ -60,11 +60,49 @@ def return_book(title, library):
 def find_book(title, library):
     if title in library:
         book = library[title]
-        print(f"Информация о книге \"{title}\":\nАвтор: {book["author"]}\nГод издания: {book["year"]}"
-              f"\nВ наличии: {"Да" if book["in_stock"] else "Нет"}")
+        print(f"Информация о книге \"{title}\":"
+              f"\nАвтор: {book["author"]}"
+              f"\nГод издания: {book["year"]}"
+              f"\n{"Книга доступна" if book["in_stock"] else "Книга выдана" if not book["in_stock"]
+              else "Книга в библиотеке, но ее статус не определен"}")
 
     else:
         print("Книга не найдена. Проверьте корректность ввода")
+
+
+def get_out():
+    print("Пока!")
+    return
+
+
+def play_with_library():
+    main_menu = {
+        "1": book_list_view,
+        "2": lambda: add_book(library, str(input("Введите название книги: ")),
+                              str(input("Укажите автора: ")),
+                              int(input("Год написания: "))),
+        "3": remove_book,
+        "4": issue_book,
+        "5": return_book,
+        "6": find_book,
+        "7": get_out
+    }
+
+    while True:
+        option = input("1. Список книг 2. Добавить/Обновить книгу 3. Удалить книгу"
+                       " 4. Взять книгу 5. Вернуть книгу 6. Информация о книге 7. Выход ")
+        if option == "7":
+            main_menu[option]()
+            break
+        elif option == "2":
+            main_menu[option]()
+        elif option == "1":
+            main_menu[option](library)
+        elif option in main_menu:
+            title = input("Введите название книги: ")
+            main_menu[option](title, library)
+        else:
+            print("Такого в меню нет.")
 
 
 library = {
@@ -74,30 +112,4 @@ library = {
     "1984": {"author": "Хаксли", "year": 1960, "in_stock": False}
 }
 
-book_list_view(library)
-
-title = input("Введите название книги: ")
-author = input("Укажите автора: ")
-year = input("Укажите год: ")
-
-while True:
-    try:
-        year = int(year)
-        break
-    except ValueError:
-        print("Введены некорректные данные. Укажите год: ")
-        year = input()
-
-add_book(library, title, author, year)
-book_list_view(library)
-remove_book(input("Какую книгу удалить? "), library)
-book_list_view(library)
-issue_book(input("Какую книгу взять? "), library)
-for title in library:
-    print(f"Книга \"{title}\": {"есть в наличии" if library[title]["in_stock"]
-    else "нет в наличии"}")
-return_book(input("Какую книгу вернуть? "), library)
-for title in library:
-    print(f"Книга \"{title}\": {"есть в наличии" if library[title]["in_stock"]
-    else "нет в наличии"}")
-find_book(input("Какая книга интересует? "), library)
+play_with_library()
