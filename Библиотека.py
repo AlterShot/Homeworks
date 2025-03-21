@@ -63,8 +63,8 @@ def find_book(title, library):
         status = "Книга доступна" if book["in_stock"] else "Книга выдана" if book["in_stock"] is False \
             else "Книга в библиотеке, но ее статус не определен"
         print(f"Информация о книге \"{title}\":"
-              f"\nАвтор: {book["author"]}"
-              f"\nГод издания: {book["year"]}"
+              f"\nАвтор: {book['author']}"
+              f"\nГод издания: {book['year']}"
               f"\n{status}")
 
     else:
@@ -85,7 +85,7 @@ def play_with_library():
         "3": lambda: remove_book(library, input("Какую книгу удалить? ")),
         "4": lambda: issue_book(library, input("Какую книгу выдать? ")),
         "5": lambda: return_book(library, input("Какую книгу вернуть? ")),
-        "6": lambda: find_book(library, input("Какая книга интересует? ")),
+        "6": lambda: find_book(input("Какая книга интересует? "), library),
         "7": get_out
     }
 
