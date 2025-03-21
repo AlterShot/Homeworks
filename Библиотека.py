@@ -8,14 +8,16 @@ def book_list_view(library):
 
 
 def add_book(library, title, author, year):
+    if not title or not author or not year:
+        print("Название, автор и год должны быть указаны")
+        return
+
     if title in library:
         print(f"\"{title}\" уже существует. Желаете обновить? (да/нет) ")
         option = input().lower()
         if option == "да":
-            if author:
-                library[title]["author"] = author
-            if year:
-                library[title]["year"] = year
+            library[title]["author"] = author
+            library[title]["year"] = year
             library[title]["in_stock"] = None
             print(f"Информация о книге \"{title}\" успешно обновлена")
         elif option == "нет":
@@ -72,15 +74,14 @@ def find_book(title, library):
 
 
 def get_out():
-    print("Пока!")
-    return
+    return False
 
 
 def play_with_library():
     main_menu = {
         "1": lambda: book_list_view(library),
-        "2": lambda: add_book(library, str(input("Введите название книги: ")),
-                              str(input("Укажите автора: ")),
+        "2": lambda: add_book(library, (input("Введите название книги: ")),
+                              (input("Укажите автора: ")),
                               int(input("Год написания: "))),
         "3": lambda: remove_book(library, input("Какую книгу удалить? ")),
         "4": lambda: issue_book(library, input("Какую книгу выдать? ")),
@@ -89,12 +90,12 @@ def play_with_library():
         "7": get_out
     }
 
-    while True:
-        option = input("1. Список книг 2. Добавить/Обновить книгу 3. Удалить книгу"
-                       " 4. Взять книгу 5. Вернуть книгу 6. Информация о книге 7. Выход ")
+    flag = True
+    while flag:
+        option = input("1. Список книг\n2. Добавить/Обновить книгу\n3. Удалить книгу"
+                       "\n4. Взять книгу\n5. Вернуть книгу\n6. Информация о книге\n7. Выход\nВаш выбор: ")
         if option == "7":
-            main_menu[option]()
-            break
+            flag = get_out()
         elif option in main_menu:
             main_menu[option]()
         else:
