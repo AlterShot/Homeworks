@@ -60,10 +60,9 @@ def return_book(title, library):
 def find_book(title, library):
     if title in library:
         book = library[title]
-        print(f"Информация о книге \"{title}\":")
-        print(f"Автор: {book["author"]}")
-        print(f"Год издания: {book["year"]}")
-        print(f"В наличии: {"Да" if book["in_stock"] else "Нет"}")
+        print(f"Информация о книге \"{title}\":\nАвтор: {book["author"]}\nГод издания: {book["year"]}"
+              f"\nВ наличии: {"Да" if book["in_stock"] else "Нет"}")
+
     else:
         print("Книга не найдена. Проверьте корректность ввода")
 
