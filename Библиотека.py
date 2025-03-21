@@ -60,11 +60,12 @@ def return_book(title, library):
 def find_book(title, library):
     if title in library:
         book = library[title]
+        status = "Книга доступна" if book["in_stock"] else "Книга выдана" if book["in_stock"] is False \
+            else "Книга в библиотеке, но ее статус не определен"
         print(f"Информация о книге \"{title}\":"
               f"\nАвтор: {book["author"]}"
               f"\nГод издания: {book["year"]}"
-              f"\n{"Книга доступна" if book["in_stock"] else "Книга выдана" if not book["in_stock"]
-              else "Книга в библиотеке, но ее статус не определен"}")
+              f"\n{status}")
 
     else:
         print("Книга не найдена. Проверьте корректность ввода")
@@ -77,14 +78,14 @@ def get_out():
 
 def play_with_library():
     main_menu = {
-        "1": book_list_view,
+        "1": lambda: book_list_view(library),
         "2": lambda: add_book(library, str(input("Введите название книги: ")),
                               str(input("Укажите автора: ")),
                               int(input("Год написания: "))),
-        "3": remove_book,
-        "4": issue_book,
-        "5": return_book,
-        "6": find_book,
+        "3": lambda: remove_book(library, input("Какую книгу удалить? ")),
+        "4": lambda: issue_book(library, input("Какую книгу выдать? ")),
+        "5": lambda: return_book(library, input("Какую книгу вернуть? ")),
+        "6": lambda: find_book(library, input("Какая книга интересует? ")),
         "7": get_out
     }
 
@@ -94,13 +95,8 @@ def play_with_library():
         if option == "7":
             main_menu[option]()
             break
-        elif option == "2":
-            main_menu[option]()
-        elif option == "1":
-            main_menu[option](library)
         elif option in main_menu:
-            title = input("Введите название книги: ")
-            main_menu[option](title, library)
+            main_menu[option]()
         else:
             print("Такого в меню нет.")
 
