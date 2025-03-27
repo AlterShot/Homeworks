@@ -1,16 +1,17 @@
 from todolist import ToDoList
 
+
 def get_out():
     return False
+
 
 def play_with_todolist():
     todolist = ToDoList()
     main_menu = {
-        "1": todolist.list_tasks,
-        "2": todolist.add_task,
-        "3": todolist.remove_task,
-        "4": todolist.complete_task,
-        "5": get_out()
+        "1": lambda: todolist.show_list_tasks(),
+        "2": lambda: todolist.add_task(input("Введите название задачи: ")),
+        "3": lambda: todolist.remove_task(input("Введите название задачи: ")),
+        "4": lambda: todolist.complete_task(input("Введите название задачи: "))
     }
 
     flag = True
@@ -19,15 +20,10 @@ def play_with_todolist():
                        "\n4. Отметить выполненным \n5. Выход\nВаш выбор: ")
         if option == "5":
             flag = get_out()
-        elif option == "4":
-            task = input("Введите название задачи: ")
-            main_menu[option](task)
-        elif option in ["2", "3"]:
-            task = input("Введите название задачи: ")
-            main_menu[option](task)
-        elif option == "1":
+        elif option in main_menu:
             main_menu[option]()
         else:
             print("Такого в меню нет.")
+
 
 play_with_todolist()
