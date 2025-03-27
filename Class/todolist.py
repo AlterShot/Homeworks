@@ -19,7 +19,7 @@ class ToDoList:
                 self.tasks[check_task]["status"] = True
                 print(f"Задача \"{task}\" отмечена выполненной")
             else:
-                print(f"Задача \"{task}\" уже выполненна")
+                print(f"Задача \"{task}\" уже выполнена")
         else:
             print(f"Задача не найдена")
 
@@ -32,7 +32,7 @@ class ToDoList:
         else:
             print(f"Задача не найдена")
 
-    def list_tasks(self):
+    def show_list_tasks(self):
         if not self.tasks:
             print("Задач пока нет.")
         else:
