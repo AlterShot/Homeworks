@@ -1,11 +1,11 @@
 import math
 import abc
-from abc import abstractmethod
 
 
 class Shape(abc.ABC):
-    @abstractmethod
-    def area(self): pass
+    @abc.abstractmethod
+    def area(self):
+        pass
 
 
 class Rectangle(Shape):
